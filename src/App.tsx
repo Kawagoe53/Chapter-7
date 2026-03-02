@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PostsDetail from "./Components/PostsDetail.js";
+import PostDetail from "./Components/PostDetail.js";
 import Posts from "./Components/Posts.js";
 import Header from "./Components/Header.js";
 import ContactForm from "./Components/ContactForm.js";
@@ -11,7 +11,7 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Posts />} />
-        <Route path="/posts/:id" element={<PostsDetail />} />
+        <Route path="/posts/:id" element={<PostDetail />} />
         <Route path="/contact" element={<ContactForm />} />
       </Routes>
     </BrowserRouter>
