@@ -7,30 +7,49 @@ type ContactFormData = {
   name: string;
 };
 
+type ContactRequestBody = {
+  email: string;
+  message: string;
+  name: string;
+};
+
+//ContactFormDataはフォームの型、ContactRequestBodyはAPIに送るデータの型と役割を分けることで、
+// 将来バックエンドの仕様が変わった時にContactRequestBodyだけ修正すればいいようになる
+
 export default function ContactForm() {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting }, //isSubmitting取り出すだけでtrue/false自動でしてくれる
+    formState: { errors, isSubmitting },
+    //isSubmitting取り出すだけでtrue/false自動でしてくれる
+    //このerrorsはバリデーション用
   } = useForm<ContactFormData>();
 
   const onSubmit = async (data: ContactFormData) => {
-    console.log(data);
     try {
+      const requestBody: ContactRequestBody = {
+        email: data.email,
+        message: data.message,
+        name: data.name,
+        //型を明示的に定義
+      };
       await fetch(
         //awaitはfetchの結果（サーバーからのレスポンス）が返ってくるまで次の行に進まずに待つ
         "https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/contacts",
         {
           method: "POST", //送信するモード
           headers: { "Content-Type": "application/json" }, //送り状,受け取り側への中身の説明
-          body: JSON.stringify(data), // 通信で送れるのは文字列だけ！
-          // なのでJSON.stringifyで文字列に変換する
+          body: JSON.stringify(requestBody),
+          // 通信で送れるのは文字列だけ、なのでJSON.stringifyで文字列に変換する
+          //dataとは何か
+          // →react-hook-formのhandleSubmitが自動でフォームの入力値を集めてdataに入れて渡してくれる
         },
       );
       alert("送信しました");
       reset();
     } catch (error) {
+      //try-catchの性質でcatchの引数にはエラー内容が自動的に入る
       console.error(error);
       alert("送信に失敗しました");
     }

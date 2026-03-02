@@ -3,17 +3,9 @@ import "../App.css";
 import "../index.css";
 import { formatDate } from "../utils/formatDate";
 import { useState, useEffect } from "react";
+import type { Post } from "../Types/Post";
 
-type Post = {
-  id: string;
-  title: string;
-  content: string;
-  thumbnailUrl: string;
-  createdAt: string;
-  categories: string[];
-};
-
-export default function PostsDetail() {
+export default function PostDetail() {
   const { id } = useParams();
   const [error, setError] = useState<string | null>(null);
   const [post, setPostDetail] = useState<Post | null>(null);

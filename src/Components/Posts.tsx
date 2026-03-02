@@ -3,15 +3,7 @@ import "../App.css";
 import { formatDate } from "../utils/formatDate";
 import { useState } from "react";
 import { useEffect } from "react";
-
-type Post = {
-  id: string;
-  title: string;
-  content: string;
-  thumbnailUrl: string;
-  createdAt: string;
-  categories: string[];
-};
+import type { Post } from "../Types/Post";
 
 export default function Posts() {
   const [posts, setPosts] = useState<Post[]>([]); //データの保持するためにpostsという空箱を用意する
